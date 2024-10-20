@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: white;
+            color: black;
+            text-align: center;
+        }
+    
+    </style>
+
+    
+</head>
+<body>
+    <div >
+        
+        <h1><p id="loadmessage"></p></h1>
+    
+    
+    </div>
+</body>
+
+<script>
+    // List of countries we want to block
+    // To see this in action add your country code to the array
+    var blacklist = ['US', 'CA', 'UK', 'RU','CN','IN' ]
+    var whitelist = ['HK']
+
+    const xhr = new XMLHttpRequest();
+    xhr.onload = () => {
+        const data = JSON.parse(xhr.responseText);
+        //console.log(data); // Log the response data
+        //console.log(data.ip); // Log the response data
+        //console.log(data.country); // Log the response data
+
+
+    // Checking if the user's country code is in the blacklist
+    // You could inverse the logic here to use a whitelist instead
+    if (blacklist.includes(data.country)) {
+        //alert('This content is not available at your location.');
+        //console.log('This content is not available at your location.');
+        document.getElementById('loadmessage').innerHTML = "Website Under Maintenance";
+
+    } 
+    if(whitelist.includes(data.country)){
+        //alert("You're allowed to see this!")
+        //console.log("You're allowed to see this!");
+        document.getElementById('loadmessage').innerHTML = "Welcome";
+    }   
+    else {
+        //alert("You're allowed to see this!")
+        //console.log("You're allowed to see this!");
+        document.getElementById('loadmessage').innerHTML = "Website Under Maintenance";
+    }
+
+    
+    };
+
+    xhr.open('GET', 'https://api.country.is/');
+    xhr.send();
+</script>
+
+</html>
